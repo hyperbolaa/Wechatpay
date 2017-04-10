@@ -49,8 +49,7 @@ class WechatpayServiceProvider extends ServiceProvider
 			$wechatpay->setAppId($app->config->get('wechatpay.jsapi.app_id'))
 				->setMerchantId($app->config->get('wechatpay.jsapi.merchant_id'))
 				->setKey($app->config->get('wechatpay.jsapi.key'))
-				->setNotifyUrl($app->config->get('wechatpay.jsapi.notify_url'))
-				->setDeviceInfo($app->config->get('wechatpay.jsapi.device_info'));
+				->setNotifyUrl($app->config->get('wechatpay.jsapi.notify_url'));
 			return $wechatpay;
 		});
 		$this->app->bind('alisms.app', function ($app)
@@ -59,8 +58,7 @@ class WechatpayServiceProvider extends ServiceProvider
 			$wechatpay->setAppId($app->config->get('wechatpay.app.app_id'))
 				->setMerchantId($app->config->get('wechatpay.app.merchant_id'))
 				->setKey($app->config->get('wechatpay.app.key'))
-				->setNotifyUrl($app->config->get('wechatpay.app.notify_url'))
-				->setDeviceInfo($app->config->get('wechatpay.app.device_info'));
+				->setNotifyUrl($app->config->get('wechatpay.app.notify_url'));
 			return $wechatpay;
 		});
 	}

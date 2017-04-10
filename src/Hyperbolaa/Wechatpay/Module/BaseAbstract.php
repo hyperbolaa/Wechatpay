@@ -5,7 +5,6 @@ namespace Hyperbolaa\Wechatpay\Module;
 
 use Guzzle\Http\Client as HttpClient;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
-use Hyperbolaa\Wechatpay\Lib\Helper;
 
 class BaseAbstract
 {
@@ -86,88 +85,5 @@ class BaseAbstract
 		return HttpRequest::createFromGlobals();
 	}
 
-	/**
-	 * [WeixinJSBridge] Generate js config for payment.
-	 *
-	 * <pre>
-	 * WeixinJSBridge.invoke(
-	 *  'getBrandWCPayRequest',
-	 *  ...
-	 * );
-	 * </pre>
-	 *
-	 * @param string $prepayId
-	 * @param bool   $json
-	 *
-	 * @return string|array
-	 */
-	public function configForPayment($app_id,$key,$prepayId, $json = true)
-	{
-		$params = [
-			'appId' => $app_id,
-			'timeStamp' => strval(time()),
-			'nonceStr' => uniqid(),
-			'package' => "prepay_id=$prepayId",
-			'signType' => 'MD5',
-		];
-
-		$params['paySign'] = Helper::sign($params, $key, 'md5');
-
-		return $json ? json_encode($params) : $params;
-	}
-
-	/**
-	 * [JSSDK] Generate js config for payment.
-	 *
-	 * <pre>
-	 * wx.chooseWXPay({...});
-	 * </pre>
-	 *
-	 * @param string $prepayId
-	 *
-	 * @return array|string
-	 */
-	public function configForJSSDKPayment($app_id,$key,$prepayId)
-	{
-		$config = $this->configForPayment($app_id,$key,$prepayId, false);
-
-		$config['timestamp'] = $config['timeStamp'];
-		unset($config['timeStamp']);
-
-		return $config;
-	}
-
-	/**
-	 * Generate app payment parameters.
-	 *
-	 * @param string $prepayId
-	 *
-	 * @return array
-	 */
-	public function configForAppPayment($app_id,$merchant_id,$key,$prepayId)
-	{
-		$params = [
-			'appid'         => $app_id,
-			'partnerid'     => $merchant_id,
-			'prepayid'      => $prepayId,
-			'noncestr'      => uniqid(),
-			'timestamp'     => time(),
-			'package'       => 'Sign=WXPay',
-		];
-
-		$params['sign'] = Helper::sign($params, $key);
-
-		return $params;
-	}
-
-	/**
-	 * Is the response successful?
-	 *
-	 * @return boolean
-	 */
-	public function isSuccess()
-	{
-		return isset($this->responseData['result_code']) && $this->responseData['result_code'] == 'SUCCESS';
-	}
 
 }

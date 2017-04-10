@@ -60,7 +60,7 @@ class Helper
 	 *
 	 * @return string
 	 */
-	function get_client_ip()
+	public static function get_client_ip()
 	{
 		if (!empty($_SERVER['REMOTE_ADDR'])) {
 			$ip = $_SERVER['REMOTE_ADDR'];
@@ -77,7 +77,7 @@ class Helper
 	 *
 	 * @return string
 	 */
-	function get_server_ip()
+	public static function get_server_ip()
 	{
 		if (!empty($_SERVER['SERVER_ADDR'])) {
 			$ip = $_SERVER['SERVER_ADDR'];
