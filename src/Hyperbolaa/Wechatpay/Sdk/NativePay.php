@@ -10,8 +10,6 @@ class NativePay
 	 * 短连接
 	 */
 	public function index(){
-		$shortUrlObj = new ShortUrl();
-		$data = $shortUrlObj->index();
-		return $data;
+		//
 	}
 }

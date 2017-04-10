@@ -56,13 +56,13 @@ class Notify
 		try {
 			$xml = XML::parse(strval($this->request->getContent()));
 		} catch (\Throwable $t) {
-			throw new Exception('Invalid request XML: '.$t->getMessage(), 400);
+			throw new \Exception('Invalid request XML: '.$t->getMessage(), 400);
 		} catch (\Exception $e) {
-			throw new Exception('Invalid request XML: '.$e->getMessage(), 400);
+			throw new \Exception('Invalid request XML: '.$e->getMessage(), 400);
 		}
 
 		if (!is_array($xml) || empty($xml)) {
-			throw new Exception('Invalid request XML.', 400);
+			throw new \Exception('Invalid request XML.', 400);
 		}
 
 		return $this->notify = new Collection($xml);
