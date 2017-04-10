@@ -6,6 +6,7 @@ use Hyperbolaa\Wechatpay\Lib\Helper;
 
 class Apppay
 {
+
 	/**
 	 * 短连接
 	 */

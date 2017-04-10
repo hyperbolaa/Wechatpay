@@ -43,7 +43,7 @@ class WechatpayServiceProvider extends ServiceProvider
      */
 	public function register()
 	{
-		$this->app->bind('wechatpay.jspai', function ($app)
+		$this->app->bind('wechatpay.jsapi', function ($app)
 		{
 			$wechatpay = new Sdk\Jsapipay();
 			$wechatpay->setAppId($app->config->get('wechatpay.jsapi.app_id'))
