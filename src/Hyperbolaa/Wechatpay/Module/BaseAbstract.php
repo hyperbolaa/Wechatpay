@@ -68,10 +68,7 @@ class BaseAbstract
 	protected function getDefaultHttpClient()
 	{
 		return new HttpClient(
-			'',
-			array(
-				'curl.options' => array(CURLOPT_CONNECTTIMEOUT => 60),
-			)
+			['curl.options' => array(CURLOPT_CONNECTTIMEOUT => 60)]
 		);
 	}
 

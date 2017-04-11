@@ -16,8 +16,8 @@ class UnifiedOrder extends BaseAbstract
 	 * 统一下单
 	 */
 	public function create($data){
-		$request      = $this->httpClient->post(self::API_PREPARE_ORDER)->setBody(Helper::array2xml($data));
-		$response     = $request->send()->getBody();
+		$request      = $this->httpClient->request('POST',self::API_PREPARE_ORDER,['body'=>Helper::array2xml($data)]);
+		$response     = $request->getBody();
 		$responseData = Helper::xml2array($response);
 		return $responseData;
 	}
