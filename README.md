@@ -28,7 +28,7 @@
         $json = $wechatpay->configForPayment($prepayId);
         $succ_url = 'xx';//支付成功回调地址
         $fail_url = 'xx';//支付失败回调地址
-        $data = $wechatpay->handle($json,$succ_url,$fail_url);
+        $data = $wechatpay->bridgeHandle($json,$succ_url,$fail_url);
         return new Response($data);
     }else{
         //faile

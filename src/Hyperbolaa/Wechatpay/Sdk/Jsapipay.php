@@ -89,7 +89,7 @@ class Jsapipay extends BasePay
 	 * @param $fail_url
 	 * @return string
 	 */
-	public static function handle($config, $succ_url, $fail_url)
+	public static function bridgeHandle($config, $succ_url, $fail_url)
 	{
 		return '
             <script type="text/javascript">
