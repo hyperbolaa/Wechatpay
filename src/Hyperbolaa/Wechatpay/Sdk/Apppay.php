@@ -12,7 +12,7 @@ use Hyperbolaa\Wechatpay\Module\UnifiedOrder;
 class Apppay extends BasePay
 {
 
-	private $trade_type  = 'App';//交易类型
+	protected $trade_type  = 'App';//交易类型
 
 	/**
 	 * 签名

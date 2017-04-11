@@ -8,7 +8,7 @@ use Hyperbolaa\Wechatpay\Module\UnifiedOrder;
 class Jsapipay extends BasePay
 {
 
-	private $trade_type  = 'JSAPI';//交易类型
+	protected $trade_type  = 'JSAPI';//交易类型
 
 	/**
 	 * 签名
