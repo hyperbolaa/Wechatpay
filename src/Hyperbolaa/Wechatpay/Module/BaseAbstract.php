@@ -3,7 +3,7 @@
 
 namespace Hyperbolaa\Wechatpay\Module;
 
-use Guzzle\Http\Client as HttpClient;
+use GuzzleHttp\Client as HttpClient;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 class BaseAbstract
