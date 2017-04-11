@@ -52,7 +52,7 @@ class WechatpayServiceProvider extends ServiceProvider
 				->setNotifyUrl($app->config->get('wechatpay.jsapi.notify_url'));
 			return $wechatpay;
 		});
-		$this->app->bind('alisms.app', function ($app)
+		$this->app->bind('wechatpay.app', function ($app)
 		{
 			$wechatpay = new Sdk\Apppay();
 			$wechatpay->setAppId($app->config->get('wechatpay.app.app_id'))
