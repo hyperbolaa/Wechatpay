@@ -14,7 +14,7 @@
     运行 `php artisan vendor:publish` 命令，
     发布配置文件到你的项目中。
  
-#### wap代码使用
+#### 公众号支付
     $wechatpay = app('wechatpay.jsapi');
     $wechatpay->setBody('我是测试商品');
     $wechatpay->setOutTradeNo(123456789);
@@ -34,7 +34,7 @@
         $msg = $result['return_msg'];
         return new Response($msg);
     }
-#### wap代码使用
+#### 小程序支付
     $wechatpay = app('wechatpay.xcx');
     $wechatpay->setBody('我是测试商品');
     $wechatpay->setOutTradeNo(123456789);
@@ -52,7 +52,7 @@
     }
     
     
-#### app 代码使用
+#### APP支付
     $wechatpay = app('wechatpay.app');
     $wechatpay->setBody('我是测试商品');
     $wechatpay->setOutTradeNo(123456789);
