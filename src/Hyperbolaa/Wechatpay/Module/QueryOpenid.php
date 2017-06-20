@@ -11,22 +11,8 @@ namespace Hyperbolaa\Wechatpay\Module;
  */
 class QueryOpenid extends BaseAbstract
 {
-	public function getData()
+	public function index()
 	{
-
-		$this->validate('app_id', 'mch_id', 'auth_code');
-
-		$data = array (
-			'appid'     => $this->getAppId(),
-			'mch_id'    => $this->getMchId(),
-			'auth_code' => $this->getAuthCode(),
-			'nonce_str' => md5(uniqid()),
-		);
-
-		$data = array_filter($data);
-
-		$data['sign'] = Helper::sign($data, $this->getApiKey());
-
-		return $data;
+		//todo
 	}
 }

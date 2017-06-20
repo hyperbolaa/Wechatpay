@@ -18,11 +18,6 @@ class BaseAbstract
 	 */
 	protected $httpRequest;
 
-	/**
-	 * @var
-	 */
-	protected $responseData;
-
 
 	//请求地址
 	const API_PREPARE_ORDER = 'https://api.mch.weixin.qq.com/pay/unifiedorder';//统一下单

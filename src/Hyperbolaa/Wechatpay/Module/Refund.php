@@ -13,28 +13,8 @@ namespace Hyperbolaa\Wechatpay\Module;
  */
 class Refund extends BaseAbstract
 {
-	public function getData()
+	public function index()
 	{
-		$this->validate('app_id', 'mch_id', 'out_trade_no', 'cert_path', 'key_path');
-
-		$data = array (
-			'appid'           => $this->getAppId(),
-			'mch_id'          => $this->getMchId(),
-			'device_info'     => $this->getDeviceInfo(),
-			'transaction_id'  => $this->getTransactionId(),
-			'out_trade_no'    => $this->getOutTradeNo(),
-			'out_refund_no'   => $this->getOutRefundNo(),
-			'total_fee'       => $this->getTotalFee(),
-			'refund_fee'      => $this->getRefundFee(),
-			'refund_fee_type' => $this->getRefundFee(),
-			'op_user_id'      => $this->getOpUserId() ?: $this->getMchId(),
-			'nonce_str'       => md5(uniqid()),
-		);
-
-		$data = array_filter($data);
-
-		$data['sign'] = Helper::sign($data, $this->getApiKey());
-
-		return $data;
+		//todo
 	}
 }

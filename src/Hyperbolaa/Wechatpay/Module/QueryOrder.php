@@ -2,6 +2,7 @@
 
 namespace Hyperbolaa\Wechatpay\Module;
 
+use Hyperbolaa\Exception\FaultException;
 
 /**
  * 查询订单
@@ -12,28 +13,9 @@ namespace Hyperbolaa\Wechatpay\Module;
 class QueryOrder extends BaseAbstract
 {
 
-	public function getData()
+	public function index()
 	{
-		$this->validate('app_id', 'mch_id');
-
-		if (! $this->getTransactionId() && ! $this->getOutTradeNo()) {
-			throw new InvalidRequestException("The 'transaction_id' or 'out_trade_no' parameter is required");
-
-		}
-
-		$data = array (
-			'appid'          => $this->getAppId(),
-			'mch_id'         => $this->getMchId(),
-			'transaction_id' => $this->getTransactionId(),
-			'out_trade_no'   => $this->getOutTradeNo(),
-			'nonce_str'      => md5(uniqid()),
-		);
-
-		$data = array_filter($data);
-
-		$data['sign'] = Helper::sign($data, $this->getApiKey());
-
-		return $data;
+		//todo
 	}
 
 

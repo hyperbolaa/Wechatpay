@@ -22,7 +22,10 @@
   "autoload": {
     "psr-4": {
       "Hyperbolaa\\Wechatpay\\": "src/Hyperbolaa/Wechatpay/"
-    }
+    },
+    "files": [
+      "src/Hyperbolaa/Wechatpay/Lib/helper.php"
+    ]
   },
   "minimum-stability": "stable"
 }

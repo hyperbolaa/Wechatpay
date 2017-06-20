@@ -43,7 +43,16 @@ class WechatpayServiceProvider extends ServiceProvider
      */
 	public function register()
 	{
-		$this->app->bind('wechatpay.jsapi', function ($app)
+		$this->app->bind('wechatpay.app', function ($app)//app支付
+		{
+			$wechatpay = new Sdk\Apppay();
+			$wechatpay->setAppId($app->config->get('wechatpay.app.app_id'))
+				->setMerchantId($app->config->get('wechatpay.app.merchant_id'))
+				->setKey($app->config->get('wechatpay.app.key'))
+				->setNotifyUrl($app->config->get('wechatpay.app.notify_url'));
+			return $wechatpay;
+		});
+		$this->app->bind('wechatpay.jsapi', function ($app)//公众号支付
 		{
 			$wechatpay = new Sdk\Jsapipay();
 			$wechatpay->setAppId($app->config->get('wechatpay.jsapi.app_id'))
@@ -52,9 +61,9 @@ class WechatpayServiceProvider extends ServiceProvider
 				->setNotifyUrl($app->config->get('wechatpay.jsapi.notify_url'));
 			return $wechatpay;
 		});
-		$this->app->bind('wechatpay.app', function ($app)
+		$this->app->bind('wechatpay.xcx', function ($app)//小程序支付 [和公众号支付类似]
 		{
-			$wechatpay = new Sdk\Apppay();
+			$wechatpay = new Sdk\Jsapipay();
 			$wechatpay->setAppId($app->config->get('wechatpay.app.app_id'))
 				->setMerchantId($app->config->get('wechatpay.app.merchant_id'))
 				->setKey($app->config->get('wechatpay.app.key'))
@@ -73,6 +82,7 @@ class WechatpayServiceProvider extends ServiceProvider
         return [
             'wechatpay.app',
             'wechatpay.jsapi',
+            'wechatpay.xcx',
             'wechatpay.micropay',
             'wechatpay.native',
         ];

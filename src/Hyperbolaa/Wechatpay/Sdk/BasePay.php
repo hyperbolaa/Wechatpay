@@ -3,6 +3,7 @@
 
 namespace Hyperbolaa\Wechatpay\Sdk;
 
+use Hyperbolaa\Exception\FaultException;
 use Hyperbolaa\Wechatpay\Lib\XML;
 
 class BasePay
@@ -39,7 +40,7 @@ class BasePay
 		$notify = $this->getNotify();
 
 		if (!$notify->isValid($this->key)) {
-			throw new \Exception('Invalid request payloads.', 400);
+			throw new FaultException('Invalid request payloads.', 400);
 		}
 
 		$notify = $notify->getNotify();

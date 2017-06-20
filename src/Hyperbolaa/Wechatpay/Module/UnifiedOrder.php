@@ -2,7 +2,6 @@
 
 namespace Hyperbolaa\Wechatpay\Module;
 
-use Hyperbolaa\Wechatpay\Lib\Helper;
 use Hyperbolaa\Wechatpay\Lib\Collection;
 
 /**

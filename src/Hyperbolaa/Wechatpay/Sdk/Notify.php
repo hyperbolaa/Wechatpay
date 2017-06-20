@@ -2,9 +2,9 @@
 
 namespace Hyperbolaa\Wechatpay\Sdk;
 
+use Hyperbolaa\Exception\FaultException;
 use Hyperbolaa\Wechatpay\Lib\Collection;
 use Hyperbolaa\Wechatpay\Lib\XML;
-use Hyperbolaa\Wechatpay\Lib\Helper;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -13,10 +13,9 @@ use Symfony\Component\HttpFoundation\Request;
 class Notify
 {
 
+
 	/**
-	 * Request instance.
-	 *
-	 * @var \Symfony\Component\HttpFoundation\Request
+	 * @var
 	 */
 	protected $request;
 
@@ -56,13 +55,13 @@ class Notify
 		try {
 			$xml = XML::parse(strval($this->request->getContent()));
 		} catch (\Throwable $t) {
-			throw new \Exception('Invalid request XML: '.$t->getMessage(), 400);
+			throw new FaultException('Invalid request XML: '.$t->getMessage(), 400);
 		} catch (\Exception $e) {
-			throw new \Exception('Invalid request XML: '.$e->getMessage(), 400);
+			throw new FaultException('Invalid request XML: '.$e->getMessage(), 400);
 		}
 
 		if (!is_array($xml) || empty($xml)) {
-			throw new \Exception('Invalid request XML.', 400);
+			throw new FaultException('Invalid request XML.', 400);
 		}
 
 		return $this->notify = new Collection($xml);

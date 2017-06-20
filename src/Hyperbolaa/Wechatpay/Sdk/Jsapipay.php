@@ -2,7 +2,6 @@
 
 namespace Hyperbolaa\Wechatpay\Sdk;
 
-use Hyperbolaa\Wechatpay\Lib\Helper;
 use Hyperbolaa\Wechatpay\Module\UnifiedOrder;
 
 class Jsapipay extends BasePay

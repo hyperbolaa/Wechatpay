@@ -12,20 +12,6 @@ class ShortUrl extends BaseAbstract
 {
 	public function index()
 	{
-
-		$this->validate('app_id', 'mch_id', 'long_url');
-
-		$data = array (
-			'appid'     => $this->getAppId(),
-			'mch_id'    => $this->getMchId(),
-			'long_url'  => $this->getLongUrl(),
-			'nonce_str' => md5(uniqid()),
-		);
-
-		$data = array_filter($data);
-
-		$data['sign'] = Helper::sign($data, $this->getApiKey());
-
-		return $data;
+		//todo
 	}
 }
