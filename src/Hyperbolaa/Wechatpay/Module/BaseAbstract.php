@@ -8,9 +8,9 @@ use Hyperbolaa\Wechatpay\Lib\XML;
 use Hyperbolaa\Wechatpay\Lib\Http;
 use Hyperbolaa\Wechatpay\Lib\Collection;
 use GuzzleHttp\Middleware;
-use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Hyperbolaa\Wechatpay\Lib\Log;
 
 /**
  * 接口请求的处理

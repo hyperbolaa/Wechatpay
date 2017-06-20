@@ -1,5 +1,6 @@
 <?php
 return [
+	'debug' =>  true,
 	'app'=>[
 		'app_id'        => '',//微信支付移动APPID
 		'merchant_id'   => '',//微信支付分配的商户号
