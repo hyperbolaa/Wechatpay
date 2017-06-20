@@ -24,7 +24,7 @@
       "Hyperbolaa\\Wechatpay\\": "src/Hyperbolaa/Wechatpay/"
     },
     "files": [
-      "src/Hyperbolaa/Wechatpay/Lib/helper.php"
+      "src/Hyperbolaa/Wechatpay/Lib/helpers.php"
     ]
   },
   "minimum-stability": "stable"
