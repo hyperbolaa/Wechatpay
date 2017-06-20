@@ -64,10 +64,10 @@ class WechatpayServiceProvider extends ServiceProvider
 		$this->app->bind('wechatpay.xcx', function ($app)//小程序支付 [和公众号支付类似]
 		{
 			$wechatpay = new Sdk\Jsapipay();
-			$wechatpay->setAppId($app->config->get('wechatpay.app.app_id'))
-				->setMerchantId($app->config->get('wechatpay.app.merchant_id'))
-				->setKey($app->config->get('wechatpay.app.key'))
-				->setNotifyUrl($app->config->get('wechatpay.app.notify_url'));
+			$wechatpay->setAppId($app->config->get('wechatpay.xcx.app_id'))
+				->setMerchantId($app->config->get('wechatpay.xcx.merchant_id'))
+				->setKey($app->config->get('wechatpay.xcx.key'))
+				->setNotifyUrl($app->config->get('wechatpay.xcx.notify_url'));
 			return $wechatpay;
 		});
 	}
