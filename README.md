@@ -19,7 +19,7 @@
     $wechatpay->setBody('我是测试商品');
     $wechatpay->setOutTradeNo(123456789);
     $wechatpay->setTotalFee(1);
-    $wechatpay->setOpenid('ssssssss');
+    $wechatpay->setOpenid('ssssssss');//公众号openid获取参考微信网页授权
     
     $result = $wechatpay->prepare();
     if ($result['return_code'] == 'SUCCESS' && $result['result_code'] == 'SUCCESS'){
@@ -31,10 +31,27 @@
         $data = $wechatpay->bridgeHandle($json,$succ_url,$fail_url);
         return new Response($data);
     }else{
-        //faile
-        return $result['return_msg'];
+        $msg = $result['return_msg'];
+        return new Response($msg);
     }
-
+#### wap代码使用
+    $wechatpay = app('wechatpay.xcx');
+    $wechatpay->setBody('我是测试商品');
+    $wechatpay->setOutTradeNo(123456789);
+    $wechatpay->setTotalFee(1);
+    $wechatpay->setOpenid('ssssssss');//微信小程序的openid获取参考wx.login
+    
+    $result = $wechatpay->prepare();
+    if ($result['return_code'] == 'SUCCESS' && $result['result_code'] == 'SUCCESS'){
+        $prepayId = $result['prepay_id'];
+        $arr = $wechatpay->configForPayment($prepayId,false);
+        return new Response($data);//返回给微信小程序
+    }else{
+        $msg = $result['return_msg'];
+        return new Response($msg);
+    }
+    
+    
 #### app 代码使用
     $wechatpay = app('wechatpay.app');
     $wechatpay->setBody('我是测试商品');
@@ -46,8 +63,8 @@
         $prepayId = $result['prepay_id'];
         return $wechatpay->configForPayment($prepayId);
     }else{
-        //fail 
-        return $result['return_msg'];
+        $msg = $result['return_msg'];
+        return $msg;
     }
 
 
@@ -74,8 +91,8 @@
     分
 
 ## 支付类别
-    JSAPI     公众号支付    已接通
-    APP       APP支付      已接通
+    JSAPI     [公众号,小程序]支付    已接通
+    APP       APP支付              已接通
     NATIVE    扫码支付      
     MICROPAY  刷卡支付
 
@@ -84,8 +101,6 @@
 
 ## 待优化
     添加日志记录
-    数据严格要求
-    参数的做统一处理
 
 ## 联系&打赏 ##
 
