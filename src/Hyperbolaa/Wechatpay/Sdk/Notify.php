@@ -2,7 +2,7 @@
 
 namespace Hyperbolaa\Wechatpay\Sdk;
 
-use Hyperbolaa\Exception\FaultException;
+use Hyperbolaa\Wechatpay\Exception\FaultException;
 use Hyperbolaa\Wechatpay\Lib\Collection;
 use Hyperbolaa\Wechatpay\Lib\XML;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,8 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class Notify
 {
-
-
 	/**
 	 * @var
 	 */

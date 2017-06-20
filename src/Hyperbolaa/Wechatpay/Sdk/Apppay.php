@@ -13,6 +13,11 @@ class Apppay extends BasePay
 
 	protected $trade_type  = 'App';//交易类型
 
+	public function __construct($config)
+	{
+		parent::__construct($config);
+	}
+
 	/**
 	 * 签名
 	 */

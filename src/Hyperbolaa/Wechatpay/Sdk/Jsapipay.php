@@ -9,6 +9,12 @@ class Jsapipay extends BasePay
 
 	protected $trade_type  = 'JSAPI';//交易类型
 
+	public function __construct($config)
+	{
+		parent::__construct($config);
+	}
+
+
 	/**
 	 * 签名
 	 */

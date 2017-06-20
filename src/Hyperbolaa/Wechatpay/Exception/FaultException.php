@@ -1,6 +1,6 @@
 <?php
 
-namespace Hyperbolaa\Exception;
+namespace Hyperbolaa\Wechatpay\Exception;
 
 /**
  * Class FaultException.

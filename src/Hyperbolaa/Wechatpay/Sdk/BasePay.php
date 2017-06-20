@@ -1,13 +1,24 @@
 <?php
 
-
 namespace Hyperbolaa\Wechatpay\Sdk;
 
-use Hyperbolaa\Exception\FaultException;
+use Hyperbolaa\Wechatpay\Exception\FaultException;
 use Hyperbolaa\Wechatpay\Lib\XML;
+use Hyperbolaa\Wechatpay\Lib\Log;
+use Monolog\Handler\HandlerInterface;
+use Monolog\Handler\NullHandler;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+use Pimple\Container;
 
-class BasePay
+/**
+ * 支付的所有接口地址
+ * Class BasePay
+ * @package Hyperbolaa\Wechatpay\Sdk
+ */
+class BasePay extends Container
 {
+	protected $config; //参数
 	protected $app_id;//微信支付分配的公众账号ID
 	protected $merchant_id;//微信支付分配的商户号
 	protected $key;//支付签名使用
@@ -27,6 +38,62 @@ class BasePay
 	protected $device_info;//设备号
 	protected $trade_type;//交易类型  [JSAPI,APP,NATIVE]；这三个走统一下单  【MICROPAY】：单独流程
 	protected $fee_type = 'CNY';//标价币种
+
+	public function __construct($config)
+	{
+		parent::__construct();
+		$this['config'] = function () use ($config) {
+			return new Config($config);
+		};
+		if ($this['config']['debug']) {
+			error_reporting(E_ALL);
+		}
+
+		$this->initializeLogger();
+		$this->logConfiguration($config);
+	}
+
+	/**
+	 * Log configuration.
+	 *
+	 * @param array $config
+	 */
+	public function logConfiguration($config)
+	{
+		$config = new Config($config);
+
+		$keys = ['app_id', 'secret', 'open_platform.app_id', 'open_platform.secret', 'mini_program.app_id', 'mini_program.secret'];
+		foreach ($keys as $key) {
+			!$config->has($key) || $config[$key] = '***'.substr($config[$key], -5);
+		}
+
+		Log::debug('Current config:', $config->toArray());
+	}
+
+	/**
+	 * Initialize logger.
+	 */
+	private function initializeLogger()
+	{
+		if (Log::hasLogger()) {
+			return;
+		}
+
+		$logger = new Logger('wechatpay');
+
+		if (!$this['config']['debug'] || defined('PHPUNIT_RUNNING')) {
+			$logger->pushHandler(new NullHandler());
+		}elseif ($logFile = $this['config']['log.file']) {
+			$logger->pushHandler(new StreamHandler(
+					$logFile,
+					$this['config']->get('log.level', Logger::WARNING),
+					true,
+					$this['config']->get('log.permission', null))
+			);
+		}
+
+		Log::setLogger($logger);
+	}
 
 
 	/**

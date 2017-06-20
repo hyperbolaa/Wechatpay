@@ -41,6 +41,8 @@ function xml2array($xml)
  */
 function generate_sign($attributes, $key, $encryptMethod = 'md5')
 {
+	$attributes  = array_filter($attributes);
+
 	ksort($attributes);
 
 	$attributes['key'] = $key;

@@ -3,15 +3,26 @@
 
 namespace Hyperbolaa\Wechatpay\Module;
 
-use GuzzleHttp\Client as HttpClient;
-use Symfony\Component\HttpFoundation\Request as HttpRequest;
+use Hyperbolaa\Wechatpay\Exception\FaultException;
+use Hyperbolaa\Wechatpay\Lib\XML;
+use Hyperbolaa\Wechatpay\Lib\Http;
+use Hyperbolaa\Wechatpay\Lib\Collection;
+use GuzzleHttp\Middleware;
+use GuzzleHttp\Psr7\Uri;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
+/**
+ * 接口请求的处理
+ * Class BaseAbstract
+ * @package Hyperbolaa\Wechatpay\Module
+ */
 class BaseAbstract
 {
 	/**
 	 * The request client.
 	 */
-	protected $httpClient;
+	protected $http;
 
 	/**
 	 * The HTTP request object.
@@ -46,36 +57,98 @@ class BaseAbstract
 	const BILL_TYPE_REVOKED = 'REVOKED';//当日已撤销的订单
 
 	/**
-	 * 初始化
-	 * BaseAbstract constructor.
+	 * @return Http
 	 */
-	public function __construct()
+	public function getHttp()
 	{
-		$this->httpClient  = $this->getDefaultHttpClient();
-		$this->httpRequest = $this->getDefaultHttpRequest();
+		if (is_null($this->http)) {
+			$this->http = new Http();
+		}
+
+		if (count($this->http->getMiddlewares()) === 0) {
+			$this->registerHttpMiddlewares();
+		}
+
+		return $this->http;
 	}
 
 	/**
-	 * Get the global default HTTP client.
-	 *
-	 * @return HttpClient
+	 * Register Guzzle middlewares.
 	 */
-	protected function getDefaultHttpClient()
+	protected function registerHttpMiddlewares()
 	{
-		return new HttpClient(
-			['curl.options' => array(CURLOPT_CONNECTTIMEOUT => 60)]
-		);
+		$this->http->addMiddleware($this->logMiddleware());
+	}
+
+
+	/**
+	 * Log the request.
+	 *
+	 * @return \Closure
+	 */
+	protected function logMiddleware()
+	{
+		return Middleware::tap(function (RequestInterface $request, $options) {
+			Log::debug("Request: {$request->getMethod()} {$request->getUri()} ".json_encode($options));
+			Log::debug('Request headers:'.json_encode($request->getHeaders()));
+		});
+	}
+
+
+	/**
+	 * @param Http $http
+	 * @return $this
+	 */
+	public function setHttp(Http $http)
+	{
+		$this->http = $http;
+
+		return $this;
 	}
 
 	/**
-	 * Get the global default HTTP request.
-	 *
-	 * @return HttpRequest
+	 * @param $method
+	 * @param array $args
+	 * @return Collection
 	 */
-	protected function getDefaultHttpRequest()
+	public function parseJSON($method, array $args)
 	{
-		return HttpRequest::createFromGlobals();
+		$http = $this->getHttp();
+
+		$contents = $http->parseJSON(call_user_func_array([$http, $method], $args));
+
+		$this->checkAndThrow($contents);
+
+		return new Collection($contents);
 	}
 
+	/**
+	 * Check the array data errors, and Throw exception when the contents contains error.
+	 * @param array $contents
+	 * @throws FaultException
+	 */
+	protected function checkAndThrow(array $contents)
+	{
+		if (isset($contents['errcode']) && 0 !== $contents['errcode']) {
+			if (empty($contents['errmsg'])) {
+				$contents['errmsg'] = 'Unknown';
+			}
+
+			throw new FaultException($contents['errmsg'], $contents['errcode']);
+		}
+	}
+
+
+	/**
+	 * @param $response
+	 * @return Collection
+	 */
+	protected function parseResponse($response)
+	{
+		if ($response instanceof ResponseInterface) {
+			$response = $response->getBody();
+		}
+		return new Collection((array) XML::parse($response));
+	}
 
 }

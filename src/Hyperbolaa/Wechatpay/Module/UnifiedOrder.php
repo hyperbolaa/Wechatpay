@@ -2,8 +2,8 @@
 
 namespace Hyperbolaa\Wechatpay\Module;
 
-use Hyperbolaa\Wechatpay\Lib\Collection;
 use Hyperbolaa\Wechatpay\Lib\XML;
+use Hyperbolaa\Wechatpay\Lib\Collection;
 
 /**
  * 统一下单接口
@@ -13,15 +13,21 @@ use Hyperbolaa\Wechatpay\Lib\XML;
  */
 class UnifiedOrder extends BaseAbstract
 {
+
 	/**
 	 * 统一下单
+	 * @param $params
+	 * @param array $options
+	 * @return \Hyperbolaa\Wechatpay\Lib\Collection
 	 */
-	public function create($data){
-		$data         = array_filter($data);
-		$request      = $this->httpClient->request('POST',self::API_PREPARE_ORDER,['body'=>XML::build($data)]);
-		$response     = $request->getBody();
-		$responseData = XML::parse($response);
-		return new Collection((array)$responseData);
+	public function create($params,$options = []){
+		$params  = array_filter($params);
+		$options = array_merge([
+			'body' => XML::build($params),
+		], $options);
+
+		$response  = $this->getHttp()->request(self::API_PREPARE_ORDER,'POST',$options);
+		return $this->parseResponse($response);
 	}
 
 }

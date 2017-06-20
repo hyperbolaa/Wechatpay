@@ -3,7 +3,7 @@
 
 namespace Hyperbolaa\Wechatpay\Lib;
 
-use Hyperbolaa\Exception\FaultException;
+use Hyperbolaa\Wechatpay\Exception\FaultException;
 
 class Str
 {

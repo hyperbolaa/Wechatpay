@@ -2,8 +2,6 @@
 
 namespace Hyperbolaa\Wechatpay\Module;
 
-use Hyperbolaa\Exception\FaultException;
-
 /**
  * 查询订单
  * Class QueryOrder
