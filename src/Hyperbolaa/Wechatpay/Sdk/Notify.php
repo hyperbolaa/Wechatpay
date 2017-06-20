@@ -39,7 +39,7 @@ class Notify
 	 */
 	public function isValid($key)
 	{
-		$localSign = Helper::sign($this->getNotify()->except('sign')->all(), $key);
+		$localSign = generate_sign($this->getNotify()->except('sign')->all(), $key);
 
 		return $localSign === $this->getNotify()->get('sign');
 	}

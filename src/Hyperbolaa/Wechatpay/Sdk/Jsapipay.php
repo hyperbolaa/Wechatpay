@@ -23,7 +23,7 @@ class Jsapipay extends BasePay
 			'out_trade_no'     => $this->out_trade_no,//todo
 			'fee_type'         => $this->fee_type,
 			'total_fee'        => $this->total_fee,//todo
-			'spbill_create_ip' => $this->spbill_create_ip ?: Helper::get_client_ip(),
+			'spbill_create_ip' => $this->spbill_create_ip ?: get_client_ip(),
 			'time_start'       => $this->time_start,
 			'time_expire'      => $this->time_expire,
 			'goods_tag'        => $this->goods_tag,
@@ -34,7 +34,7 @@ class Jsapipay extends BasePay
 			'nonce_str'        => $this->getNonceStr()
 		];
 
-		$data['sign'] = Helper::sign($data, $this->key);
+		$data['sign'] = generate_sign($data, $this->key);
 		return $data;
 	}
 
@@ -73,7 +73,7 @@ class Jsapipay extends BasePay
 			'signType'  => 'MD5',
 		];
 
-		$params['paySign'] = Helper::sign($params, $this->key);
+		$params['paySign'] = generate_sign($params, $this->key);
 
 		return $json ? json_encode($params) : $params;
 	}
