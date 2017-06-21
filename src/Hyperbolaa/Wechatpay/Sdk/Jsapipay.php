@@ -2,6 +2,8 @@
 
 namespace Hyperbolaa\Wechatpay\Sdk;
 
+use Hyperbolaa\Wechatpay\Aes\WxBizDataCrypt;
+use Hyperbolaa\Wechatpay\Lib\Collection;
 use Hyperbolaa\Wechatpay\Module\UnifiedOrder;
 
 class Jsapipay extends BasePay
@@ -177,6 +179,20 @@ class Jsapipay extends BasePay
 	                callpay();
 	            };
 			</script>';
+	}
+
+
+	/**
+	 * 获取小程序的用户信息
+	 */
+	public function getUserInfo($encrypteddata,$iv,$sessionkey){
+		$decodeData = '';
+		$dataCrypt = new WxBizDataCrypt($this->app_id,$sessionkey);
+		$errorCode = $dataCrypt->decryptData($encrypteddata,$iv,$decodeData);
+		if($errorCode != 0){
+			return new Collection(['code'  => $errorCode,'msg'   => '解密失败']);
+		}
+		return new Collection(json_decode($decodeData,true));
 	}
 
 

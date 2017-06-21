@@ -50,7 +50,8 @@
         $msg = $result['return_msg'];
         return new Response($msg);
     }
-    
+>小程序登录获取用户信息拓展
+>>app('wechatpay.xcx')->getUserInfo($encrypteddata,$iv,$sessionkey);
     
 #### APP支付
     $wechatpay = app('wechatpay.app');
