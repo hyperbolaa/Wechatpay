@@ -2,7 +2,7 @@
 
 namespace Hyperbolaa\Wechatpay\Sdk;
 
-use Hyperbolaa\Wechatpay\Aes\WxBizDataCrypt;
+use Hyperbolaa\Wechatpay\Encryption\Encryptor;
 use Hyperbolaa\Wechatpay\Lib\Collection;
 use Hyperbolaa\Wechatpay\Module\UnifiedOrder;
 
@@ -186,14 +186,9 @@ class Jsapipay extends BasePay
 	 * 获取小程序的用户信息
 	 */
 	public function getUserInfo($encrypteddata,$iv,$sessionkey){
-		$decodeData = '';
-		$dataCrypt = new WxBizDataCrypt($this->app_id,$sessionkey);
-		$errorCode = $dataCrypt->decryptData($encrypteddata,$iv,$decodeData);
-		if($errorCode != 0){
-			return new Collection(['code'  => $errorCode,'msg'   => '解密失败']);
-		}
-		return new Collection(json_decode($decodeData,true));
+		$encryptor = new Encryptor();
+		$result = $encryptor->decryptData($sessionkey,$iv,$encrypteddata);
+		return new Collection($result);
 	}
-
 
 }
