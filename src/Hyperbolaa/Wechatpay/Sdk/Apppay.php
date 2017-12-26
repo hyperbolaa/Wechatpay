@@ -11,7 +11,7 @@ use Hyperbolaa\Wechatpay\Module\UnifiedOrder;
 class Apppay extends BasePay
 {
 
-	protected $trade_type  = 'App';//交易类型
+	protected $trade_type  = 'APP';//交易类型
 
 	public function __construct($config)
 	{
@@ -63,7 +63,7 @@ class Apppay extends BasePay
 	 *
 	 * @return array
 	 */
-	public function configForAppPayment($prepayId)
+	public function configForPayment($prepayId)
 	{
 		$params = [
 			'appid'         => $this->app_id,
