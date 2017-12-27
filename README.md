@@ -31,7 +31,7 @@
         $data = $wechatpay->bridgeHandle($json,$succ_url,$fail_url);
         return new Response($data);
     }else{
-        $msg = $result['return_msg'];
+        $msg = '微信回调失败；请求错误信息：'.$result['return_msg'].'；业务错误信息：'.$result['err_code_des'];
         return new Response($msg);
     }
 #### 小程序支付
@@ -47,7 +47,7 @@
         $arr = $wechatpay->configForPayment($prepayId,false);
         return new Response($data);//返回给微信小程序
     }else{
-        $msg = $result['return_msg'];
+        $msg =  '微信回调失败；请求错误信息：'.$result['return_msg'].'；业务错误信息：'.$result['err_code_des'];
         return new Response($msg);
     }
 >小程序登录获取用户信息拓展
@@ -64,8 +64,7 @@
         $prepayId = $result['prepay_id'];
         return $wechatpay->configForPayment($prepayId);
     }else{
-        $msg = $result['return_msg'];
-        return $msg;
+        return '微信回调失败；请求错误信息：'.$result['return_msg'].'；业务错误信息：'.$result['err_code_des'];
     }
 
 
