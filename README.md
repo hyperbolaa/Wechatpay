@@ -44,7 +44,7 @@
     $result = $wechatpay->prepare();
     if ($result['return_code'] == 'SUCCESS' && $result['result_code'] == 'SUCCESS'){
         $prepayId = $result['prepay_id'];
-        $arr = $wechatpay->configForPayment($prepayId,false);
+        $data = $wechatpay->configForPayment($prepayId,false);
         return new Response($data);//返回给微信小程序
     }else{
         $msg =  '微信回调失败；请求错误信息：'.$result['return_msg'].'；业务错误信息：'.$result['err_code_des'];
