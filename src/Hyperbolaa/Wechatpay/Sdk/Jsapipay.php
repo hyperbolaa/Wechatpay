@@ -108,7 +108,7 @@ class Jsapipay extends BasePay
                             if(res.err_msg == "get_brand_wcpay_request:ok"){
                                    window.location.href="' . $succ_url . '";
                             }else{
-                                alert(支付失败);
+                                alert('支付失败');
                                 window.location.href="' . $fail_url . '";
                             }
                         }
