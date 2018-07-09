@@ -2,38 +2,6 @@
 
 namespace Hyperbolaa\Wechatpay\Sdk;
 
-/**
- * 函数式数据转换
- * @param $arr
- * @param string $root
- * @return string
- */
-function array2xml($arr, $root = 'xml')
-{
-	$xml = "<$root>";
-	foreach ($arr as $key => $val) {
-		if (is_numeric($val)) {
-			$xml .= "<" . $key . ">" . $val . "</" . $key . ">";
-		} else {
-			$xml .= "<" . $key . "><![CDATA[" . $val . "]]></" . $key . ">";
-		}
-	}
-	$xml .= "</xml>";
-
-	return $xml;
-}
-
-/**
- * 函数式数据转换
- * @param $xml
- * @return mixed
- */
-function xml2array($xml)
-{
-	libxml_disable_entity_loader(true);
-	return json_decode(json_encode(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA)), true);
-}
-
 
 /**
  * @param $data

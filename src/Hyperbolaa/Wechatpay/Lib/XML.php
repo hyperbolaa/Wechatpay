@@ -18,7 +18,10 @@ class XML
      */
     public static function parse($xml)
     {
-        return self::normalize(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA | LIBXML_NOBLANKS));
+	    $backup = libxml_disable_entity_loader(true);
+        $return = self::normalize(simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA | LIBXML_NOBLANKS));
+	    libxml_disable_entity_loader($backup);
+	    return $return;
     }
 
 
